@@ -1,0 +1,111 @@
+﻿<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
+
+@model ContactViewModel
+@{
+    ViewData["Title"] = "Contacts";
+}
+
+<table class="table table-striped table-dark">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Firstname</th>
+            <th scope="col">Lastname</th>
+            <th scope="col">Email</th>
+            <th scope="col">Address</th>
+            <th scope="col">Phone Numbers</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Contacts)
+        {
+            <tr>
+                <th scope="row"> @(Model.Contacts.FindIndex(a => a.ContactId == item.ContactId)+1)</th>
+                <td>@item.FirstName</td>
+                <td>@item.LastName</td>
+                @if (!string.IsNullOrWhiteSpace(item.Email))
+                {
+                    <td>@item.Email</td>
+                }
+                else
+                {
+                    <td class="text-muted">empty</td>
+                }
+                @if (!string.IsNullOrWhiteSpace(item.Address))
+                {
+                    <td>@item.Address</td>
+                }
+                else
+                {
+                    <td class="text-muted">empty</td>
+                }
+                <td>
+                    @if (Model.Contacts.Count() != 0)
+                    {
+                        <div class="dropdown show">
+                            <a class="btn btn-secondary dropdown-toggle" href="#" role="list" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Phone Numbers
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                @if (@item.PhoneNumbers.Count != 0)
+                                {
+                                    @foreach (var phone in Model.PhoneNumbers)
+                                    {
+                                        @if (phone.ContactId == item.ContactId)
+                                        {
+                                            <a class="dropdown-item">@phone.Number</a>
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    <a class="dropdown-item text-muted">none</a>
+                                }
+                            </div>
+                        </div>
+                    }
+                </td>
+                <td>
+                    <form method="get">
+                        <button class="btn btn-info" asp-controller="Contact"
+                                asp-action="ShowDetails" asp-route-id="@item.ContactId">
+                            Details
+                        </button>
+                    </form>
+                </td>
+                <td>
+                    <form method="get">
+                        <button class="btn btn-secondary" asp-controller="Contact"
+                                asp-action="Edit" asp-route-id="@item.ContactId">
+                            Edit
+                        </button>
+                    </form>
+                </td>
+                <td>
+                    <form method="post">
+                        <button class="btn btn-danger" asp-controller="Contact"
+                                asp-action="Delete" asp-route-id="@item.ContactId"
+                                onclick="return confirm('Are you sure you want to delete this contact?')">
+                            Delete
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (@Model.Contacts.Count > 1)
+{
+    <h6 class="layout-fonts">You have <b>@Model.Contacts.Count</b> contacts!</h6>
+
+}
+else if (@Model.Contacts.Count == 0)
+{
+    <h6 class="layout-fonts">You don't have contacts! Create a contact now!</h6>
+}
+else
+{
+    <h6 class="layout-fonts">You have <b>@Model.Contacts.Count</b> contact!</h6>
+}

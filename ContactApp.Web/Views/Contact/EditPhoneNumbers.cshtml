@@ -1,0 +1,52 @@
+﻿@model ContactApp.Web.Models.ContactPhoneEditViewModel
+
+@{
+    ViewData["Title"] = "Edit Contact";
+}
+
+<form method="post">
+
+    <h2>Edit Phone Numbers</h2>
+    
+    <div class="col">
+        @foreach (var item in Model.PhoneNumbers)
+        {
+            <div style="margin:4px">
+                <div class="col-2">
+                    <label asp-for="@item.Number">Phone Number #@(Model.PhoneNumbers.FindIndex(p => p.PhoneNumberId == item.PhoneNumberId)+1)</label>
+                </div>
+                <div class="col-3">
+                    <input class="form-control" name="number" value="@item.Number" type="tel" asp-for="@item.Number" />
+                    <input class="form-control" type="hidden" name="phoneNumberId" value="@item.PhoneNumberId" asp-for="@item.PhoneNumberId" />
+                    <span class="text-danger"></span>
+                </div>
+            </div>
+        }
+
+        <div class="row" style="margin-bottom:5px">
+            @if(Model.PhoneNumbers.Count != 0){
+                <button type="submit" onclick="return alert('Updated Successfully')" class=" btn btn-warning" asp-controller="Contact"
+                        asp-action="EditPhoneNumbers" asp-route-id="@Model.Contact.ContactId">
+                    Update
+                </button>
+            }
+        </div>
+
+    </div>
+</form>
+
+<form method="get">
+    <div class="row">
+        <div class="col-3">
+            <button type="submit" class="btn btn-info" asp-controller="Contact"
+                    asp-action="AddPhoneNumbers">
+                Add Phone Numbers
+            </button>
+        </div>
+        <div class="col-2">
+            <a asp-action="Index" class="btn btn-success form-control">Back to List</a>
+        </div>
+    </div>
+</form>
+
+

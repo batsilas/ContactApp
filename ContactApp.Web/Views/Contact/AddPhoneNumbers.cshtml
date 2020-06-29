@@ -1,0 +1,32 @@
+﻿@model ContactApp.Core.Model.PhoneNumber
+@{
+    ViewData["Title"] = "Create Contact";
+}
+<form method="post">
+
+    <h2>Add Phone Number</h2>
+    
+    <div class="row">
+        
+        <div class="col">
+            <input type="tel" class="form-control"
+                   name="number" placeholder="Type Phone Number" oninvalid="this.setCustomValidity('Please enter a valid Phone Number')">
+        </div>
+        
+        <div class="col">
+            <button type="submit" class="btn btn-warning" onclick="return alert('Added Successfully')" asp-controller="Contact"
+                    asp-action="AddPhoneNumbers">
+                Add
+            </button>
+        
+        </div>
+    </div>
+    
+    <div class="row" style="margin-top:5px">
+        <div class="col-4">
+            <button type="button" onclick="location.href='index';" value="Go to Contacts" class="btn btn-success">Exit</button>
+        </div>
+    </div>
+
+</form>
+
