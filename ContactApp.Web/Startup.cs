@@ -27,9 +27,11 @@ namespace ContactApp.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
             services.AddDbContext<MyContactsDbContext>(options =>
             options.UseSqlServer(
                 Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddScoped<IContactService, ContactService>();
             services.AddScoped<IPhoneNumberService, PhoneNumberService>();
         

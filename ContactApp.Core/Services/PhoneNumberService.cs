@@ -63,12 +63,10 @@ namespace ContactApp.Core.Services
 
             phoneNumber.Number = number.Value;
 
-            if (context_.SaveChanges() > 0)
-            {
-                return true;
-            }
-
-            return false;
+            context_.SaveChanges();
+            
+            return true;
+           
         }
 
         //Delete an existing Phone Number by Contact
